@@ -1,4 +1,8 @@
+import textwrap
+import os
+
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -38,10 +42,12 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+player = Player('Adventurer', room['outside'])
 
 # Write a loop that:
 #
 # * Prints the current room name
+
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
 #
@@ -49,3 +55,52 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+clear = lambda: os.system('cls')
+clear()
+
+def start_game():
+    input('Press Enter to Begin')
+
+def movement_disallowed():
+    print(chr(27) + '[2J')
+    print('You begin in that direction, but realize there is nothing over there.')
+
+move = ('n', 's', 'e', 'w')
+
+
+while True:
+    print(f'Where you are: {player.current_room.name} \n')
+    print(f'{player.current_room.description} \n')
+    player_move = input(f'What\'s your move, {player.name}?')
+    player_move = player_move.lower()
+
+    if player_move in ['q', 'quit']:
+        break
+    # player moves
+    if player_move in move:
+        # move north
+        if player_move == 'n':
+            if hasattr(player.current_room, 'n_to'):
+                player.current_room = player.current_room.n_to
+            else:
+                movement_disallowed()
+        # move south
+        elif player_move == 's':
+            if hasattr(player.current_room, 's_to'):
+                player.current_room = player.current_room.s_to
+            else:
+                movement_disallowed()
+        # move east
+        elif player_move == 'e':
+            if hasattr(player.current_room, 'e_to'):
+                player.current_room = player.current_room.e_to
+            else:
+                movement_disallowed()
+        # move west
+        elif player_move == 'w':
+            if hasattr(player.current_room, 'w_to'):
+                player.current_room = player.current_room.w_to
+            else:
+                movement_disallowed()
+        else:
+            movement_disallowed()
