@@ -139,6 +139,21 @@ def take_item(action, target):
         print("You can't take that.")
 
 
+def drop_item(action, target):
+    if target in world.item:
+        print('yes that is an item')
+        target_item = world.item.get(target)
+        print(target_item)
+        print(player.items)
+        if target_item in player.items:
+            print('yes you have it')
+            target_item.on_drop(player)
+        else:
+            print("You don't seem to have that item")
+    else:
+        print("That's not something you can drop")
+
+
 def main_text():
     print(f'Where you are: {player.current_room.name}')
     if len(player.inspecting_item) > 0:
@@ -188,6 +203,9 @@ while True:
 
     if action in take_item_actions:
         take_item(action, target)
+
+    if action in drop_item_actions:
+        drop_item(action, target)
     # print(textwrap.fill(f'{player.current_room.description} \n', width=60))
     # player_move = input(f'What\'s your move, {player.name}?')
     # player_move = player_move.lower().split(" ", 1)

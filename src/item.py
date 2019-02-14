@@ -41,7 +41,7 @@ class Item:
 
     def on_drop(self, player):
         print(f'\nYou drop the {self.name}')
-        player.location.items.append(self)
+        player.current_room.items.append(self)
         player.items.remove(self)
 
     def inspect(self, player):
