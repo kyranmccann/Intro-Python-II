@@ -10,8 +10,11 @@ class Container:
     def on_open(self, player):
         player.inspecting_container = [self]
         print(f'Inspecting the {self.name}, you find')
-        for item in self.contents:
-            print(item.name)
+        if len(self.contents) > 0:
+            for item in self.contents:
+                print(item.name)
+        else:
+            print('nothing more of interest')
 
     def __repr__(self):
         return f'Name:{self.name}, description: {self.description}'
