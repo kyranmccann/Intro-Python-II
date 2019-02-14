@@ -7,12 +7,14 @@ class Container:
         self.description = description
         self.contents = []
 
-        def on_open(self, player):
-            player.inspecting = [self]
-            print(f'You check the {self.name} and you find  {self.contents}')
+    def on_open(self, player):
+        player.inspecting_container = [self]
+        print(f'Inspecting the {self.name}, you find')
+        for item in self.contents:
+            print(item.name)
 
-        def __repr__(self):
-            return f'Name:{self.name}, description: {self.description}'
+    def __repr__(self):
+        return f'Name:{self.name}, description: {self.description}'
 
 
 class Item:
@@ -40,11 +42,9 @@ class Item:
         player.items.remove(self)
 
     def inspect(self, player):
-        player.inspecting = [self]
+        player.inspecting_item = [self]
         print(f'\nYou approach the {self.name} to try to get a better look.')
         print(f'It\'s {self.description}')
-        input('Press enter to continue')
-        player.inspecting = []
 
     def on_use(self, player):
         player.using_item = [self]
