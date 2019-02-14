@@ -58,20 +58,25 @@ player = Player('Adventurer', room['outside'])
 clear = lambda: os.system('cls')
 clear()
 
+
 def start_game():
+    print(' ************* ')
     input('Press Enter to Begin')
+
 
 def movement_disallowed():
     print(chr(27) + '[2J')
     print('You begin in that direction, but realize there is nothing over there.')
 
+
 move = ('n', 's', 'e', 'w')
 
-
+start_game()
 while True:
     print(f'Where you are: {player.current_room.name} \n')
     print(f'{player.current_room.description} \n')
     player_move = input(f'What\'s your move, {player.name}?')
+
     player_move = player_move.lower()
 
     if player_move in ['q', 'quit']:
