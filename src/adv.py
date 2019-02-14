@@ -123,6 +123,22 @@ def stop_inspect(action, target):
         player.inspecting_container = []
 
 
+def take_item(action, target):
+    if target in world.item:
+        target_item = world.item.get(target)
+        item_container = player.inspecting_container[0]
+        if target_item in item_container.contents:
+            print("yup that's in here.")
+            target_item.on_take_container(player, item_container)
+            if len(player.inspecting_item) > 0 and player.inspecting_item[0] == target_item:
+                player.inspecting_item = []
+                # inspect_container(action, player.inspecting_container[0].name)
+        else:
+            print("I don't see that item here")
+    else:
+        print("You can't take that.")
+
+
 def main_text():
     print(f'Where you are: {player.current_room.name}')
     if len(player.inspecting_item) > 0:
@@ -169,6 +185,9 @@ while True:
 
     if action in stop_inspect_actions:
         stop_inspect(action, target)
+
+    if action in take_item_actions:
+        take_item(action, target)
     # print(textwrap.fill(f'{player.current_room.description} \n', width=60))
     # player_move = input(f'What\'s your move, {player.name}?')
     # player_move = player_move.lower().split(" ", 1)
